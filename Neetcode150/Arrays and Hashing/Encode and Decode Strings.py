@@ -39,10 +39,29 @@
 # Codec decoder = new Codec();
 # String[] strs = decoder.decode(msg);
 
+#Change the original input list of str to an encoded version:
+#   Used lenofword + delimeter + str for encode 
+#   Used logic to find the store len from lenofword as int and return every char 
+#   after the delimeter up until len is done
+
 class Solution:
-
     def encode(self, strs: List[str]) -> str:
-        pass
-
+        res = ""
+        for string in strs:
+            res += str(len(string)) + "#" + string
+        return res
+#input for decode = "["5#Hello","5#World"]"  | str
+#expected output  = ["Hello", "World"] | list
     def decode(self, s: str) -> List[str]:
-        pass
+        i = 0
+        res = []
+        while i < len(s):
+            j = i
+            while s[j] != "#":
+                j += 1
+            length = int(s[i:j])
+            res.append(s[j + 1: j + 1 + length])
+            i = j + 1 + length 
+        return res
+
+
