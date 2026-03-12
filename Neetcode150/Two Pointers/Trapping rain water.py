@@ -1,13 +1,25 @@
-#area is h * w 
-#check if there is boundaries for each space to hold water 
-#by using l pointer @ 0 and another at that is the val at 
-#pointer 1 or greater, then calculate that area
+#the Solution is to use two pointers
+#left pointer iterates if height[l] less then right pointer at height[r]
+#this is because we just need the minimum value of the two
+#then we calculate whichever side is the minimum - height[minpointer]
+#then update the new max value if found, and then add to res
+#return res
+
 class Solution:
     def trap(self, height: List[int]) -> int:
-        l = 0 
-        r = 1
-        area = 0
-        while l <= r:
-            if height[l] > 0 and height[r] < height[l]: 
-                pass
-    
+        if not height: return 0
+  
+        l, r = 0, len(height)-1
+        leftMax, rightMax = height[l], height[r]
+        res = 0
+        
+        while l < r:
+            if leftMax < rightMax:
+                l += 1
+                leftMax = max(leftMax, height[l])
+                res += leftMax - height[l]
+            else:
+                r -= 1
+                rightMax = max(rightMax, height[r])
+                res += rightMax - height[r]
+        return res
